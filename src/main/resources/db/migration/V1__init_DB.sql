@@ -1,0 +1,36 @@
+-- create table bucket_seq (next_val bigint) engine=InnoDB
+-- insert into bucket_seq values ( 1 )
+--  create table buckets (id bigint not null, user_id bigint, primary key (id)) engine=InnoDB
+-- create table buckets_products (bucket_id bigint not null, product_id bigint not null) engine=InnoDB
+-- create table categories (id bigint not null, title varchar(255), primary key (id)) engine=InnoDB
+-- Hibernate: create table category_seq (next_val bigint) engine=InnoDB
+-- Hibernate: insert into category_seq values ( 1 )
+-- Hibernate: create table order_details_seq (next_val bigint) engine=InnoDB
+-- Hibernate: insert into order_details_seq values ( 1 )
+-- Hibernate: create table order_seq (next_val bigint) engine=InnoDB
+-- Hibernate: insert into order_seq values ( 1 )
+-- Hibernate: create table orders (id bigint not null, address varchar(255), created datetime(6), status enum ('APPROVED','CANCELED','CLOSED','NEW','PAID'), sum decimal(38,2), updated datetime(6), user_id bigint, primary key (id)) engine=InnoDB
+-- Hibernate: create table orders_details (id bigint not null, amount decimal(38,2), price decimal(38,2), order_id bigint, product_id bigint, details_id bigint not null, primary key (id)) engine=InnoDB
+-- Hibernate: create table product_seq (next_val bigint) engine=InnoDB
+-- Hibernate: insert into product_seq values ( 1 )
+-- Hibernate: create table products (id bigint not null, price decimal(38,2), title varchar(255), primary key (id)) engine=InnoDB
+-- Hibernate: create table products_categories (product_id bigint not null, category_id bigint not null) engine=InnoDB
+-- Hibernate: create table user_seq (next_val bigint) engine=InnoDB
+-- Hibernate: insert into user_seq values ( 1 )
+-- Hibernate: create table users (id bigint not null, archive bit not null, email varchar(255), name varchar(255), password varchar(255), role enum ('ADMIN','CLIENT','MANAGER'), bucket_id bigint, primary key (id)) engine=InnoDB
+-- Hibernate: alter table buckets drop index UK_pu50kur9wrjayubjfco2ye9o7
+-- Hibernate: alter table buckets add constraint UK_pu50kur9wrjayubjfco2ye9o7 unique (user_id)
+--     Hibernate: alter table orders_details drop index UK_kk6y3pyhjt6kajomtjbhsoajo
+-- Hibernate: alter table orders_details add constraint UK_kk6y3pyhjt6kajomtjbhsoajo unique (details_id)
+--     Hibernate: alter table users drop index UK_1i248waquj2ym5o8rptg7nd92
+-- Hibernate: alter table users add constraint UK_1i248waquj2ym5o8rptg7nd92 unique (bucket_id)
+--     Hibernate: alter table buckets add constraint FKnl0ltaj67xhydcrfbq8401nvj foreign key (user_id) references users (id)
+--     Hibernate: alter table buckets_products add constraint FKloyxdc1uy11tayedf3dpu9lci foreign key (product_id) references products (id)
+--     Hibernate: alter table buckets_products add constraint FKc49ah45o66gy2f2f4c3os3149 foreign key (bucket_id) references buckets (id)
+--     Hibernate: alter table orders add constraint FK32ql8ubntj5uh44ph9659tiih foreign key (user_id) references users (id)
+--     Hibernate: alter table orders_details add constraint FK5o977kj2vptwo70fu7w7so9fe foreign key (order_id) references orders (id)
+--     Hibernate: alter table orders_details add constraint FKs0r9x49croribb4j6tah648gt foreign key (product_id) references products (id)
+--     Hibernate: alter table orders_details add constraint FKgvp1k7a3ubdboj3yhnawd5m1p foreign key (details_id) references orders_details (id)
+--     Hibernate: alter table products_categories add constraint FKqt6m2o5dly3luqcm00f5t4h2p foreign key (category_id) references categories (id)
+--     Hibernate: alter table products_categories add constraint FKtj1vdea8qwerbjqie4xldl1el foreign key (product_id) references products (id)
+--     Hibernate: alter table users add constraint FK8l2qc4c6gihjdyoch727guci foreign key (bucket_id) references buckets (id)

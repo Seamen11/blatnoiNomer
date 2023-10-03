@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+</head>
+<body>
+<h1>Атрибуты</h1>
+<ul>
+  <!-- Отобразить атрибуты из модели -->
+  <th:block th:each="attribute : ${attributes}">
+    <li th:text="${attribute.name}"></li>
+  </th:block>
+</ul>
+
+<!-- Форма для добавления новых атрибутов -->
+<form method="post" action="/add">
+  <input type="text" name="attributeName" placeholder="Введите атрибут">
+  <button type="submit">Добавить</button>
+</form>
+</body>
+</html>
